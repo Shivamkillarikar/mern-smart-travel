@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navy-950: #060c1a;
+    --navy-900: #0a0f1e;
+    --navy-800: #0d1628;
+    --gold-500: #f59e0b;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "DM Sans", sans-serif;
+    background-color: var(--navy-900);
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+
+  /* ── Custom scrollbar ─────────────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0a0f1e; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(245, 158, 11, 0.3);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(245, 158, 11, 0.6); }
+}
+
+@layer components {
+  /* ── Glassmorphism card ────────────────────────────────────────────────── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card-hover {
+    transition: all 0.2s ease;
+  }
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(245, 158, 11, 0.25);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(245, 158, 11, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* ── Gold gradient text ───────────────────────────────────────────────── */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Shimmer loading effect ───────────────────────────────────────────── */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s linear infinite;
+  }
+
+  /* ── Input style ──────────────────────────────────────────────────────── */
+  .dark-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.625rem;
+    color: #e2e8f0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .dark-input:focus {
+    outline: none;
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+  }
+
+  /* ── Predict button ───────────────────────────────────────────────────── */
+  .btn-predict {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #0a0f1e;
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+  }
+  .btn-predict:hover:not(:disabled) {
+    box-shadow: 0 0 32px rgba(245, 158, 11, 0.45);
+    transform: translateY(-1px);
+  }
+  .btn-predict:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* ── Leaflet dark theme overrides ─────────────────────────────────────────── */
+.leaflet-container {
+  background: #0d1628 !important;
+  font-family: "DM Sans", sans-serif;
+}
+.leaflet-tile-pane {
+  filter: brightness(0.7) saturate(0.5) hue-rotate(180deg) invert(1);
+}
+.leaflet-control-attribution {
+  background: rgba(10, 15, 30, 0.8) !important;
+  color: #64748b !important;
+  font-size: 10px !important;
+}
+.leaflet-control-zoom a {
+  background: rgba(13, 22, 40, 0.9) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.leaflet-popup-content-wrapper {
+  background: #111d35 !important;
+  color: #e2e8f0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 12px !important;
+}
+.leaflet-popup-tip {
+  background: #111d35 !important;
+}

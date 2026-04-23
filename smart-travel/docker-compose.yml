@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  # ── Python ML Microservice ────────────────────────────────────────────────
+  ml-service:
+    build:
+      context: ./python-service
+      dockerfile: Dockerfile
+    container_name: smart-travel-ml
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./python-service:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Express Backend ───────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart-travel-api
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - FASTAPI_URL=http://ml-service:8000
+      - FRONTEND_URL=http://localhost:5173
+    depends_on:
+      ml-service:
+        condition: service_healthy
+
+  # ── React Frontend ────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smart-travel-ui
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE=http://localhost:5000
+    depends_on:
+      - backend
